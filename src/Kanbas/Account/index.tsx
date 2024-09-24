@@ -21,12 +21,7 @@ export default function Account() {
                 <Route path="/Signup" element={<Signup />} />
             </Routes>
           </td>
-        </tr> <br /><br /><br />
-        <tfoot>
-          <td colSpan={2} valign="bottom" align="left">
-            <h5>Elizabeth Jones <br /> Class: Tuesdays 6pm-9:20pm</h5>
-          </td>
-        </tfoot>
+        </tr>
       </table>
     </div>
   );
