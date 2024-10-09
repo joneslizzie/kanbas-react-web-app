@@ -1,0 +1,76 @@
+body   {  margin: 0;  padding: 0;  }
+body * {  font-family: Arial, Helvetica, sans-serif;  }
+
+@media (min-width: 768px) {
+  #wd-kanbas .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+
+
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+.wd-text-strong {
+  font-weight: bold;
+}
+
+.btn-assignment {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #000 !important;
+}
+.wd-assignment-link {
+  --bs-btn-color: #000 !important;
+}
+
+a:link { 
+  text-decoration: none; 
+  color: #000;
+} 
+a:visited { 
+  text-decoration: none; 
+} 
+a:hover { 
+  text-decoration: none; 
+} 
+a:active { 
+  text-decoration: none; 
+}
+
+.btn-assignment:hover {
+  background-color: inherit !important; 
+  border-color: inherit !important; 
+  color: inherit !important;
+  box-shadow: none !important;
+}
+
+.btn-editor {
+  background-color: inherit !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+}
+.btn-editor:hover {
+  background-color: inherit !important; 
+  border-color: #c7cdd1 !important; 
+  color: inherit !important;
+  box-shadow: none !important;
+}

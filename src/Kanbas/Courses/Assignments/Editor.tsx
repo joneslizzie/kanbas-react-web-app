@@ -1,150 +1,98 @@
+import AssignEditor from "./AssignEditor";
+import SubmissionEditor from "./SubmissionEditor"
+
 export default function AssignmentEditor() {
     return (
       <div id="wd-assignments-editor">
         <label htmlFor="wd-name">
-          <h3>
             Assignment Name
-          </h3>
-          </label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description" cols={45} rows={10}>
-          The assignment is available online Submit a link to the landing page of your Web 
-          application running on Netlify. The landing page should include the following: Your full 
-          name and section Links to each of the lab assignments Link to the Kanbas application Links 
-          to all relevant source code repositories The Kanbas application should include a link to 
-          navigate back to the landing page.
-        </textarea>
+        </label><br />
+        <input id="wd-name" placeholder="A1" style={{width: '100%'}}/><br /><br />
+        <div id="wd-description" className="btn btn-md btn-editor me-1 text-start" 
+        style={{width: '100%'}}>
+          <br />The assignment is <span className="text-danger">available online</span><br /><br />
+          Submit a link to the landing page of your Web application running on <br />Netlify. <br /><br />
+          The landing page should include the following: <br /><br />
+          <ul>
+            <li>
+              Your full name and section
+            </li>
+            <li> 
+              Links to each of the lab assignments 
+            </li>
+            <li>
+              Link to the Kanbas application 
+            </li>
+            <li>
+              Links to all relevant source code repositories 
+              </li>
+          </ul> <br /><br />
+          The Kanbas application should include a link to navigate back to the landing <br />page.
+        </div>
+
+
         <br /><br />
-        <table>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-            </td>
-            <td align="left"><input id="wd-points" value={100} /> </td>
-        </tr> <br />
+        <div className="d-flex justify-content-end">
 
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-group">Assignment Group</label>
-          </td>
-          <td>
-            <select id="wd-group">
-                <option selected value="ASSIGNMENTS">ASSIGNMENTS</option>
-                <option value="OTHER">OTHER</option>
-            </select>
-          </td>
-        </tr> <br />
+          <div className="p-2">
+            <div className="d-flex align-items-stretch justify-content-end">
+              <div className="p-2">
+                  <label htmlFor="wd-points">Points</label>
+                  </div>
+                <div className="p-2 flex-shrink-1">
+                  <input id="wd-points" value={100}  
+                  className="form-control mb-3 me-2" style={{width: '375px'}}/>
+            </div>
+          </div>
 
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-display-grade-as">Display Grade as</label>
-          </td>
-          <td>
-            <select id="wd-display-grade-as">
-                <option selected value="PERCENTAGE">Percentage</option>
-                <option value="NUMBER">Number</option>
-                <option value="Letter">Letter</option>
-            </select>
-          </td>
-        </tr> <br />
+          <div className="p-2">
+            <div className="d-flex align-items-stretch justify-content-end">
+              <div className="p-2">
+                <label htmlFor="wd-group">Assignment Group</label>
+              </div>
+              <div className="p-2 flex-shrink-1">
+              <select id="wd-group"  className="form-select mb- d-flex justify-content-end"  
+                style={{width: '375px'}}>
+                  <option selected value="ASSIGNMENTS">ASSIGNMENTS</option>
+                  <option value="OTHER">OTHER</option>
+              </select>
+              </div>
+            </div>
+          </div>
 
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-submission-type">Submission Type</label>
-          </td>
-          <td>
-            <select id="wd-submission-type">
-                <option selected value="ONLINE">Online</option>
-                <option value="PAPER">Paper</option>
-                <option value="OTHER">Other</option>
-            </select>
-          </td>
-        </tr> <br/>
+          <div className="p-2">
+            <div className="d-flex align-items-stretch justify-content-end">
+              <div className="p-2">
+                <label htmlFor="wd-display-grade-as">Display Grade as</label>
+              </div>
+              <div className="p-2 flex-shrink-1">
+              <select id="wd-display-grade-as"  className="form-select mb-2" 
+              style={{width: '375px'}}>
+                  <option selected value="PERCENTAGE">Percentage</option>
+                  <option value="NUMBER">Number</option>
+                  <option value="Letter">Letter</option>
+              </select>
+              </div>
+            </div>
+          </div>
+          <div className="p-2">
+            <SubmissionEditor />
+          </div>
+          <div className="p-2">
+            <AssignEditor />
+          </div>
 
-        <tr>
-          <td />
-          <td align="left" valign="top">
-            <label>Online Entry Options</label>
-            <br/>
-          <input type="checkbox" name="check-entry" id="wd-text-entry"/>
-          <label htmlFor="wd-text-entry">Text Entry</label><br/>
-          <input type="checkbox" name="check-entry" id="wd-website-url"/>
-          <label htmlFor="wd-website-url">Website URL</label><br/>
-          <input type="checkbox" name="check-entry" id="wd-media-recordings"/>
-          <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
-          <input type="checkbox" name="check-entry" id="wd-student-annotation"/>
-          <label htmlFor="wd-student-annotation">Student Annotations</label><br/>
-          <input type="checkbox" name="check-entry" id="wd-file-upload"/>
-          <label htmlFor="wd-file-upload">File Uploads</label>
-          </td>
-        </tr> <br/>
+          
+        
+        </div>
+        </div>
 
-        <tr>
-          <td colSpan={2} align="center" valign="top">
-            <label  htmlFor="wd-assign-to">Assign to </label>
-          </td>
-        </tr>
-
-        <tr>
-          <td />
-          <td align="left" valign="top">
-            <input id="wd-assign-to" value="Everyone" /><br />
-          </td>
-        </tr> <br />
-
-        <tr>
-          <td />
-          <td align="left" valign="top">
-          <label htmlFor="wd-due-date">Due</label>
-          </td>
-        </tr>
-
-        <tr>
-          <td></td>
-          <td align="left" valign="top">
-            <input type="date"
-            id="wd-due-date"
-            value="2024-05-13"/>
-          </td>
-        </tr> <br />
-
-        <tr>
-          <td></td>
-          <td align="left" valign="top">
-            <label htmlFor="wd-available-from">Available from</label>
-            </td>
-
-          <td align="left" valign="top">
-            <label htmlFor="wd-available-until">Until</label>
-            </td>
-          </tr>
-
-          <tr>
-            <td></td>
-            <td align="left" valign="top">
-              <input type="date"
-              id="wd-available-from"
-              value="2024-05-06"/>
-            </td>
-            <td>
-              <input type="date"
-              id="wd-available-until"
-              value="2024-05-20"/>
-            </td>
-          </tr> 
-
-          <br /> 
-
-          <tfoot>
-            <td colSpan={3} align="right" valign="top">
-              <hr />
+        <hr />
               <br />
-              <button id="wd-cancel">Cancel</button> <button id="wd-save">Save</button>
-            </td>
-
-          </tfoot>
-      </table>
-
+              <div className="d-flex justify-content-end">
+                <button id="wd-cancel" className="btn btn-secondary w-30 me-1">Cancel</button> 
+                <button id="wd-save" className="btn btn-danger w-30">Save</button>
+              </div>
     </div>
 );}
   
