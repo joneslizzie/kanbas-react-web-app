@@ -7,6 +7,7 @@ export default function MagnifyingGlass () {
             <HiOutlineMagnifyingGlass />
             </span>
             <input id="wd-search-assignment" className="text-start input-group-text bg-white" 
+            style = {{width: '500px', height: '50px'}} 
             placeholder="Search..." />
         </div>
     );
