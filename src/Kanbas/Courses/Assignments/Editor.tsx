@@ -1,33 +1,20 @@
+import { useParams } from "react-router-dom";
 import AssignEditor from "./AssignEditor";
 import SubmissionEditor from "./SubmissionEditor"
+import * as db from "/Users/jones/2024/fall/webdev/kanbas-react-web-app/src/Kanbas/Database";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((assignment) => assignment._id === aid);
     return (
       <div id="wd-assignments-editor">
         <label htmlFor="wd-name">
-            Assignment Name
+            {assignment?.title || ''}
         </label><br />
-        <input id="wd-name" placeholder="A1" style={{width: '100%'}}/><br /><br />
+        <input id="wd-name" placeholder={`${aid}`} style={{width: '100%'}}/><br /><br />
         <div id="wd-description" className="btn btn-md btn-editor me-1 text-start" 
         style={{width: '100%'}}>
-          <br />The assignment is <span className="text-danger">available online</span><br /><br />
-          Submit a link to the landing page of your Web application running on <br />Netlify. <br /><br />
-          The landing page should include the following: <br /><br />
-          <ul>
-            <li>
-              Your full name and section
-            </li>
-            <li> 
-              Links to each of the lab assignments 
-            </li>
-            <li>
-              Link to the Kanbas application 
-            </li>
-            <li>
-              Links to all relevant source code repositories 
-              </li>
-          </ul> <br /><br />
-          The Kanbas application should include a link to navigate back to the landing <br />page.
+          {assignment?.description}
         </div>
 
 
@@ -40,7 +27,7 @@ export default function AssignmentEditor() {
                   <label htmlFor="wd-points">Points</label>
                   </div>
                 <div className="p-2 flex-shrink-1">
-                  <input id="wd-points" value={100}  
+                  <input id="wd-points" value={assignment?.points || 0}  
                   className="form-control mb-3 me-2" style={{width: '375px'}}/>
             </div>
           </div>
@@ -90,8 +77,10 @@ export default function AssignmentEditor() {
         <hr />
               <br />
               <div className="d-flex justify-content-end">
-                <button id="wd-cancel" className="btn btn-secondary w-30 me-1">Cancel</button> 
-                <button id="wd-save" className="btn btn-danger w-30">Save</button>
+                <button id="wd-cancel" className="btn btn-secondary w-30 me-1" 
+                onClick={() => {window.location.href = `#/Kanbas/Courses/${cid}/Assignments`}}>Cancel</button> 
+                <button id="wd-save" className="btn btn-danger w-30"
+                onClick={() => {window.location.href = `#/Kanbas/Courses/${cid}/Assignments`}}>Save</button>
               </div>
     </div>
 );}
