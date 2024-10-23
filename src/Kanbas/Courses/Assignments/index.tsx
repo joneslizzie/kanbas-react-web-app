@@ -5,7 +5,7 @@ import AssignmentControls from "./AssignmentControls";
 import { PiNotePencilDuotone } from "react-icons/pi";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import * as db from "/Users/jones/2024/fall/webdev/kanbas-react-web-app/src/Kanbas/Database";
+import * as db from "../../Database";
 import { format } from 'date-fns';
 
 export default function Assignments() {

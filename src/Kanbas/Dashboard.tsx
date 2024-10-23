@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import * as db from "./Database";
+import * as db from "../../src/Kanbas/Database";
 
 export default function Dashboard() {
   const courses = db.courses;

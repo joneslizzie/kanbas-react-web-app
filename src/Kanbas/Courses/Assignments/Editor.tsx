@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import AssignEditor from "./AssignEditor";
 import SubmissionEditor from "./SubmissionEditor"
-import * as db from "/Users/jones/2024/fall/webdev/kanbas-react-web-app/src/Kanbas/Database";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();

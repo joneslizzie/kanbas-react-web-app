@@ -1,8 +1,8 @@
 import { HiOutlineXMark } from "react-icons/hi2";
 import { useParams } from "react-router-dom";
-import * as db from "/Users/jones/2024/fall/webdev/kanbas-react-web-app/src/Kanbas/Database";
 import { format } from 'date-fns';
 import { FaCalendarAlt } from "react-icons/fa";
+import * as db from "../../Database";
 
 export default function AssignEditor() {
     const { aid } = useParams();
