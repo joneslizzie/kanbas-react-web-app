@@ -53,8 +53,6 @@ export default function Assignments() {
                       ) : (
                         <span>Invalid Date</span>
                       )}
-                      {/*<span className="wd-text-strong"> Not available until </span>
-                        {format(assignment.available_date, "MMMM d")} at 12:00am |*/}
                       <br />
                       <span className="wd-text-strong">Due </span> 
                       {assignment.available_date && (new Date(assignment.available_date)) ? (
