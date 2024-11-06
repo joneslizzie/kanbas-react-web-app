@@ -8,7 +8,7 @@ export default function TodoForm() {
       <li className="list-group-item">
         <div className="d-flex">
             <div className="p-4 flex-grow-1">
-                <input defaultValue={todo.title} className="wd-rounded fs-5"
+                <input value={todo.title} className="wd-rounded fs-5"
                 onChange={ (e) => dispatch(setTodo({ ...todo, title: e.target.value })) }/>
           </div>
             <div className="p-2">

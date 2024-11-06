@@ -2,20 +2,49 @@ import { useParams } from "react-router-dom";
 import AssignEditor from "./AssignEditor";
 import SubmissionEditor from "./SubmissionEditor"
 import * as db from "../../Database";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
+  const dispatch = useDispatch();
   const assignment = db.assignments.find((assignment) => assignment._id === aid);
+  
+  const [title, setTitle] = useState(assignment?.title || '');
+  const [description, setDescription] = useState(assignment?.description || 'New Assignment Description');
+  const [points, setPoints] = useState(assignment?.points || 0);
+  const [group, setGroup] = useState("ASSIGNMENTS");
+  const [gradeDisplay, setGradeDisplay] = useState("PERCENTAGE");
+  const handleSave = async () => {
+    const newAssignment = {
+      _id: aid,
+      course: cid,
+      title,
+      description,
+      points,
+      group,
+      gradeDisplay
+    };
+
+    dispatch(addAssignment(newAssignment));
+    window.location.href = `#/Kanbas/Courses/${cid}/Assignments`;
+  };
+
     return (
       <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">
+        <label htmlFor="wd-name" >
             {assignment?.title || ''}
         </label><br />
         <input id="wd-name" placeholder={`${aid}`} style={{width: '100%'}}/><br /><br />
-        <div id="wd-description" className="btn btn-md btn-editor me-1 text-start" 
-        style={{width: '100%'}}>
-          {assignment?.description}
-        </div>
+        <textarea
+            id="wd-description"
+            className="form-control me-1 text-start"
+            style={{ width: '100%' }}
+            value={description}
+            onChange={(a) => setDescription(a.target.value)}
+            placeholder="New Assignment Description"
+        />
 
 
         <br /><br />

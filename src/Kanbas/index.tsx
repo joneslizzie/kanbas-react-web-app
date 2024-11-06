@@ -31,6 +31,29 @@ export default function Kanbas() {
       })
     );
   };
+  const [assignments, setAssignments] = useState<any[]>(db.assignments);
+  const [assignment, setAssignment] = useState<any>({
+    _id: "1234", title: "New Assignment", course: "Course",
+    available_date: "2024-11-04", due_date: "2023-12-15", description: "New Description",
+    point: "5",
+  });
+  const addNewAssignment = () => {
+    setAssignments([...assignments, { ...assignments, _id: new Date().getTime().toString() }]);
+  }
+  const deleteAssignment = (assignmentId: any) => {
+    setAssignment(assignments.filter((assignment) => assignment._id !== assignmentId));
+  };
+  const updateAssignment = () => {
+    setAssignments(
+      courses.map((a) => {
+        if (a._id === assignment._id) {
+          return assignment;
+        } else {
+          return a;
+        }
+      })
+    );
+  };
 
   return (
     <div id="wd-kanbas">
@@ -49,6 +72,12 @@ export default function Kanbas() {
               addNewCourse={addNewCourse}
               deleteCourse={deleteCourse}
               updateCourse={updateCourse}
+              assignments={assignments}
+              assignment={assignment}
+              setAssignment={setAssignment}
+              addNewAssignment={addNewAssignment}
+              deleteAssignment={deleteAssignment}
+              updateAssignment={updateAssignment}
               /></ProtectedRoute>} />
           <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} />
             </ProtectedRoute>} />

@@ -5,15 +5,23 @@ import AssignmentControls from "./AssignmentControls";
 import { PiNotePencilDuotone } from "react-icons/pi";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import * as db from "../../Database";
 import { format } from 'date-fns';
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { addAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignment = db.assignments;
+  const [assignmentTitle, setAssignmentTitle] = useState("");
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const dispatch = useDispatch();
     return (
       <div id="wd-assignments">
-        <AssignmentControls /><br /><br />
+        <AssignmentControls setAssignmentTitle={setAssignmentTitle} assignmentTitle={assignmentTitle}
+          addAssignment={() => {
+            dispatch(addAssignment({ name: assignmentTitle, course: cid }));
+            setAssignmentTitle("");
+          }}/><br /><br />
 
         <ul id="wd-modules" className="list-group rounded-0">
           <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
@@ -25,9 +33,9 @@ export default function Assignments() {
               <ModuleControlButtons />
             </h4>
             </div>
-            {assignment
-                .filter((assignment) => assignment.course === cid)
-                  .map((assignment) => (
+            {assignments
+                .filter((assignment: any) => assignment.course === cid)
+                  .map((assignment: any) => (
                     <ul className="wd-assignments list-group rounded-0">
                     <li className="wd-lesson list-group-item p-3 ps-1">
                     <div className="d-flex mb-3">
