@@ -22,11 +22,11 @@ export default function AssignmentControls (
         </button>
       </div>
       <div className="p-2">
-        <button id="wd-add-assignments-btn" className="btn btn-lg btn-danger me-1 float-end">
-          <Link to={`${location.pathname}/A000`}>
+        <Link to={`${location.pathname}/A000`}>
+          <button id="wd-add-assignments-btn" className="btn btn-lg btn-danger me-1 float-end">
             <FaPlus className="fs-5"/> Assignment 
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
 );}

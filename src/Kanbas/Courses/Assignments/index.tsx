@@ -8,7 +8,7 @@ import LessonControlButtons from "../Modules/LessonControlButtons";
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { addAssignment } from "./reducer";
+import { addAssignment, deleteAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -75,7 +75,9 @@ export default function Assignments() {
                     </div>
                   
                     <div className="ms-auto p-2">
-                      <LessonControlButtons />
+                      <LessonControlButtons assignmentId={assignment._id} deleteAssignment={(assignmentId) => {
+                      dispatch(deleteAssignment(assignmentId));
+                    }}/>
                     </div>
                   </div>
                   </li>

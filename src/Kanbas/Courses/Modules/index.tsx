@@ -6,6 +6,7 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import { addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import { deleteAssignment } from "../Assignments/reducer";
 
 export default function Modules() {
   const { cid } = useParams();
@@ -50,7 +51,10 @@ export default function Modules() {
             <ul className="wd-lessons list-group rounded-0">
               {module.lessons.map((lesson: any) => (
                 <li className="wd-lesson list-group-item p-3 ps-1">
-                    <BsGripVertical className="me-2 fs-3" /> {lesson.name} <LessonControlButtons />
+                    <BsGripVertical className="me-2 fs-3" /> {lesson.name} 
+                    <LessonControlButtons assignmentId={lesson._id} deleteAssignment={(assignmentId) => {
+                      dispatch(deleteAssignment(assignmentId));
+                    }}/>
                </li>
               ))}</ul>
             )}</li>
