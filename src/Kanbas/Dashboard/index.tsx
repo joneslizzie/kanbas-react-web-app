@@ -10,7 +10,8 @@ function Dashboard() {
   const [course, setCourse] = useState<any>('');
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const fetchCourses = async () => {
-    const courses = await userClient.findMyCourses();
+    const courses = await client.fetchAllCourses();
+    // const courses = await userClient.findMyCourses();
     setCourses(courses);
   };
 
@@ -75,13 +76,15 @@ function Dashboard() {
               <div className="card">
                 <img src={`/images/${course.image}.png`} className="card-img-top" alt="..." />
                 <div className="card-body">
+                  
                   <button
                     onClick={() => deleteCourse(course._id)}
                     className="btn btn-danger float-end"
                   >
                     Delete
                   </button>
-                  <button onClick={() => setCourse(course)}>Edit</button>
+                  <button className="btn btn-warning me-1 float-end" 
+                  onClick={() => setCourse(course)}>Edit</button>
                   <h5 className="card-title">{course.name}</h5>
 
                   <Link
