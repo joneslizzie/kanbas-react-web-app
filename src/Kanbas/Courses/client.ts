@@ -3,7 +3,6 @@ const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const MODULES_API = `${REMOTE_SERVER}/api/modules`;
 const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`;
-const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 
 export const fetchAllCourses = async () => {
   const { data } = await axios.get(COURSES_API);
@@ -63,7 +62,3 @@ export const deleteAssignment = async (assignmentId: string) => {
   const response = await axios.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
   return response.data;
  };
- export const fetchAllEnrollments = async () => {
-  const { data } = await axios.get(ENROLLMENTS_API);
-  return data;
-};

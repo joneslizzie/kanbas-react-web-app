@@ -4,14 +4,28 @@ import AssignEditor from "./AssignEditor";
 import SubmissionEditor from "./SubmissionEditor"
 import * as db from "../../Database";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 import * as assignmentsClient from "../client";
+import { setAssignments } from "../Assignments/reducer";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const dispatch = useDispatch();
-  const assignment = db.assignments.find((assignment) => assignment._id === aid);
+  const { assignment } = useSelector((state: any) => state.assignmentReducer);
+
+  const fetchAssignment = async () => {
+    try {
+      const assignment = await assignmentsClient.findAssignmentsForCourse(cid as string);
+      if(!assignment) {
+        setAssignments('');
+      } else {
+        dispatch(setAssignments(assignment));
+      }
+    } catch (error) {
+      console.log('new assignment');
+    }
+  };
   
   const [title, setTitle] = useState(assignment?.title || '');
   const [description, setDescription] = useState(assignment?.description || 'New Assignment Description');

@@ -1,6 +1,7 @@
 import axios from "axios";
 export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
+const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
 export const signin = async (credentials: any) => {
@@ -31,4 +32,13 @@ export const signup = async (user: any) => {
     const { data } = await axiosWithCredentials.get(`${USERS_API}/api/users/`);
     return data;
   };
+
+  export const enrollInCourse = async (courseId: string) => {
+    const { data } = await axiosWithCredentials.put(`${COURSES_API}/${courseId}/enrollment`);
+    return data;
+  };
   
+  export const unenrollFromCourse = async (courseId: string) => {
+    const { data } = await axiosWithCredentials.delete(`${COURSES_API}/${courseId}/unenrollment`);
+    return data;
+  };

@@ -1,6 +1,7 @@
 import * as dao from "./dao.js";
 import * as modulesDao from "../Modules/dao.js";
 import * as assignmentsDao from "../Assignments/dao.js";
+import * as enrollmentsDao from "../Enrollments/dao.js";
 export default function CourseRoutes(app) {
   app.get("/api/courses", (req, res) => {
     const courses = dao.findAllCourses();
@@ -45,6 +46,38 @@ export default function CourseRoutes(app) {
     const { courseId } = req.params;
     const assignments = assignmentsDao.findAssignmentsForCourse(courseId);
     res.json(assignments);
+  });
+
+  app.put("/api/courses/:courseId/enrollment", async (req, res) => {
+    const { courseId } = req.params;
+    const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      return res.sendStatus(401); // Unauthorized
+    }
+    const userId = currentUser._id;
+    try {
+      const status = await enrollmentsDao.enrollUserInCourse(userId, courseId);
+      res.json(status);
+    } catch (error) {
+      console.error("Error during enrollment:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+  
+  app.delete("/api/courses/:courseId/unenrollment", async (req, res) => {
+    const { courseId } = req.params;
+    const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      return res.sendStatus(401);
+    }
+    const userId = currentUser._id;
+    try {
+      const status = await enrollmentsDao.unenrollUserFromCourse(userId, courseId);
+      res.json(status);
+    } catch (error) {
+      console.error("Error during unenrollment:", error);
+      res.status(500).send("Internal Server Error");
+    }
   });
 
 }
