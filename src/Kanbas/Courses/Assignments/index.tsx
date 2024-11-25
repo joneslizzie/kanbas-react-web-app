@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useParams } from "react-router-dom";
 import { BsGripVertical } from "react-icons/bs";
 import { FaCaretDown } from "react-icons/fa";
@@ -7,21 +8,38 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { addAssignment, deleteAssignment } from "./reducer";
+import { useEffect, useState } from "react";
+import { addAssignment, deleteAssignment, setAssignments } from "./reducer";
+import * as assignmentsClient from "../client";
 
 export default function Assignments() {
   const { cid } = useParams();
   const [assignmentTitle, setAssignmentTitle] = useState("");
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();
+  const fetchAssignments = async () => {
+    const assignments = await assignmentsClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+  const createAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = { name: assignmentTitle, course: cid };
+    const assignment = await assignmentsClient.createModuleForCourse(cid, newAssignment);
+    dispatch(addAssignment(assignment));
+  };
+
+
     return (
       <div id="wd-assignments">
         <AssignmentControls setAssignmentTitle={setAssignmentTitle} assignmentTitle={assignmentTitle}
-          addAssignment={() => {
-            dispatch(addAssignment({ name: assignmentTitle, course: cid }));
-            setAssignmentTitle("");
-          }}/><br /><br />
+          addAssignment={createAssignmentForCourse}/><br /><br />
 
         <ul id="wd-modules" className="list-group rounded-0">
           <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
@@ -34,7 +52,6 @@ export default function Assignments() {
             </h4>
             </div>
             {assignments
-                .filter((assignment: any) => assignment.course === cid)
                   .map((assignment: any) => (
                     <ul className="wd-assignments list-group rounded-0">
                     <li className="wd-lesson list-group-item p-3 ps-1">
@@ -75,9 +92,8 @@ export default function Assignments() {
                     </div>
                   
                     <div className="ms-auto p-2">
-                      <LessonControlButtons assignmentId={assignment._id} deleteAssignment={(assignmentId) => {
-                      dispatch(deleteAssignment(assignmentId));
-                    }}/>
+                      <LessonControlButtons assignmentId={assignment._id} 
+                      deleteAssignment={(assignmenteId) => removeAssignment(assignmenteId)}/>
                     </div>
                   </div>
                   </li>

@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useParams } from "react-router-dom";
 import AssignEditor from "./AssignEditor";
 import SubmissionEditor from "./SubmissionEditor"
 import * as db from "../../Database";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addAssignment } from "./reducer";
+import { addAssignment, updateAssignment } from "./reducer";
+import * as assignmentsClient from "../client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -30,6 +32,13 @@ export default function AssignmentEditor() {
     dispatch(addAssignment(newAssignment));
     window.location.href = `#/Kanbas/Courses/${cid}/Assignments`;
   };
+  const saveAssignment = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+    // 
+    window.location.href = `#/Kanbas/Courses/${cid}/Assignments`;
+  };
+
 
     return (
       <div id="wd-assignments-editor">
@@ -111,7 +120,7 @@ export default function AssignmentEditor() {
                 <button id="wd-cancel" className="btn btn-secondary w-30 me-1" 
                 onClick={() => {window.location.href = `#/Kanbas/Courses/${cid}/Assignments`}}>Cancel</button> 
                 <button id="wd-save" className="btn btn-danger w-30"
-                onClick={handleSave}>Save</button>
+                onClick={saveAssignment}>Save</button>
               </div>
     </div>
 );}
