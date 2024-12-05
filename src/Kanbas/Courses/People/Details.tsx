@@ -3,7 +3,6 @@ import { FaUserCircle, FaCheck } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router";
 import { FaPencil } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import * as client from "../../Account/client";
 export default function PeopleDetails() {
   const { uid} = useParams();
@@ -38,6 +37,7 @@ export default function PeopleDetails() {
     setName(`${user.firstName} ${user.lastName}`);
     setRole(`${user.role}`)
     setEmail(`${user.email}`);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
   if (!uid) return null;
   return (

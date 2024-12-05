@@ -15,6 +15,7 @@ export default function Users() {
       fetchUsers();
     }
   };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [name, setName] = useState("");
   const filterUsersByName = async (name: string) => {
     setName(name);

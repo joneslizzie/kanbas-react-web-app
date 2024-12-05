@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 
 import * as client from "../Courses/client";
 import * as userClient from "../Account/client";
-import { useDispatch, useSelector } from "react-redux";
-import { enrollStudent, unenrollStudent } from "./reducer";
+import { useSelector } from "react-redux";
+// import { enrollStudent, unenrollStudent } from "./reducer";
 
 function Dashboard() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -70,6 +70,7 @@ function Dashboard() {
     } else {
       fetchCourses();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
