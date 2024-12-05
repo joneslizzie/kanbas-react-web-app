@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Routes, Route, Navigate } from "react-router-dom";
 import Account from "./Account";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Dashboard/index";
 import KanbasNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./style.css";
@@ -17,13 +17,14 @@ export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const fetchCourses = async () => {
-    try {
-      const courses = await userClient.findMyCourses();
-      setCourses(courses);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+   try {
+     const courses = await courseClient.fetchAllCourses();
+     setCourses(courses);
+   } catch (error) {
+     console.error(error);
+   }
+ };
+
   const fetchAssignments = async () => {
     try {
       const assignments = await courseClient.findAssignmentsForCourse(course.id);

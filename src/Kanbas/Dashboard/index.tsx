@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 
 import * as client from "../Courses/client";
 import * as userClient from "../Account/client";
-import { useSelector } from "react-redux";
-// import { enrollStudent, unenrollStudent } from "./reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { enrollStudent, unenrollStudent } from "./reducer";
 
 function Dashboard() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -70,7 +70,6 @@ function Dashboard() {
     } else {
       fetchCourses();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -101,7 +100,7 @@ function Dashboard() {
           {courses.map((course, index) => (
             <div className="col" style={{ width: 300 }}>
               <div className="card">
-                <img src={`/images/${course.image}.png`} className="card-img-top" alt="..." />
+                <img src={`/images/${course.number}.png`} className="card-img-top" alt="..." />
                 <div className="card-body">
                   
                   {/* buttons available for faculty */}

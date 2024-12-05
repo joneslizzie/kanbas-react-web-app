@@ -42,11 +42,10 @@ export default function Profile() {
       <input id="wd-email" defaultValue={profile.email} type="email" className="form-control mb-2"
         onChange={ (e) => setProfile({ ...profile, email: e.target.value })}/>
       <select id="wd-role" className="form-control mb-2" onChange={(e) => setProfile({ ...profile, role:  e.target.value })}>
-        <option value="USER">User</option>
-        <option value="ADMIN">Admin</option>
-        <option value="FACULTY">Faculty</option>
-        <option value="STUDENT">Student</option>
-      </select>
+                    <option value="STUDENT">Students</option>
+                    <option value="TA">Assistants</option> <option value="FACULTY">Faculty</option>
+                    <option value="ADMIN">Administrators</option>
+             </select>
       <button onClick={updateProfile} className="btn btn-primary w-100 mb-2"> Update </button>
       <button onClick={signout} className="btn btn-danger w-100 mb-2" id="wd-signout-btn">
             Sign out
