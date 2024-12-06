@@ -6,71 +6,23 @@ import * as userClient from "../Account/client";
 import { useDispatch, useSelector } from "react-redux";
 import { enrollStudent, unenrollStudent } from "./reducer";
 
-function Dashboard() {
-  const [courses, setCourses] = useState<any[]>([]);
-  const [course, setCourse] = useState<any>('');
+function Dashboard({courses, course, setCourse, addNewCourse, deleteCourse, updateCourse, enrolling, setEnrolling, updateEnrollment}:
+  {   courses: any[];
+    course: any;
+    setCourse: (course: any) => void;
+    addNewCourse: () => void;
+    deleteCourse: (course: any) => void;
+    updateCourse: () => void; enrolling: boolean; setEnrolling: (enrolling: boolean) => void;
+    updateEnrollment: (courseId: string, enrolled: boolean) => void;}
+) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  //const dispatch = useDispatch();
-  //const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
-  const fetchCourses = async () => {
-    const courses = await client.fetchAllCourses();
-    // const courses = await userClient.findMyCourses();
-    setCourses(courses);
-  };
-  const findAllCourses = async () => {
-    const courses = await client.fetchAllCourses();
-    setCourses(courses);
-  }
-  const enrollCourse = async (courseId: string) => {
-    await userClient.enrollInCourse(courseId);
-    fetchCourses();
-  }
-  const unenrollCourse = async (courseId: string) => {
-    await userClient.unenrollFromCourse(courseId);
-    fetchCourses();
-  } 
 
-  /*  const enrollCourse = (courseId: string) =>
-      dispatch(enrollStudent({ user: currentUser._id, course: courseId }));
-
-  const unenrollCourse = (courseId: string) =>
-      dispatch(unenrollStudent(enrollments
-          .find((enrollment: { user: string, course: string }) => enrollment && enrollment.user === currentUser._id && enrollment.course === courseId)._id));
-*/
-  const deleteCourse = async (courseId: string) => {
-    try {
-      await client.deleteCourse(courseId);
-      setCourses(courses.filter((course) => course._id !== courseId));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateCourse = async () => {
-    try {
-      await client.updateCourse(course);
-      setCourses(courses.map((c) => (c._id === course._id ? course : c)));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const addCourse = async () => {
-    const newCourse = await client.createCourse(course);
-    setCourses([newCourse, ...courses]);
-  };
   const [ showenrollmentPage, setShowenrollmentPage ] = useState(true);
   const toggleEnrollments = () => {
     setShowenrollmentPage(!showenrollmentPage);
   };
 
-  useEffect(() => {
-    if(showenrollmentPage) {
-      findAllCourses();
-    } else {
-      fetchCourses();
-    }
-  }, []);
+
   return (
     <div>
       <h1>Dashboard</h1>
@@ -83,7 +35,7 @@ function Dashboard() {
           value={course.name}
           onChange={(e) => setCourse({ ...course, name: e.target.value })} /><button onClick={updateCourse} className="btn btn-success">
             Update
-          </button><button onClick={addCourse} className="btn btn-success">
+          </button><button onClick={addNewCourse} className="btn btn-success">
             Add
           </button></>}
 
@@ -126,7 +78,7 @@ function Dashboard() {
                   <button className="btn btn-primary"> Go </button>
                   <button onClick={(event) => {
                         event.preventDefault();
-                        unenrollCourse(course._id);
+                        updateEnrollment(course._id, !course.enrolled);
                       }} className="btn btn-danger float-end"
                       id="wd-delete-course-click">
                       Unenroll
@@ -134,7 +86,7 @@ function Dashboard() {
                   <button id="wd-edit-course-click"
                     onClick={(event) => {
                       event.preventDefault();
-                      enrollCourse(course._id);
+                      updateEnrollment(course._id, !course.enrolled);
                     }}
                     className="btn btn-warning me-2 float-end" >
                     Enroll
