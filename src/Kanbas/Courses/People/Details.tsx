@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router";
 import { FaPencil } from "react-icons/fa6";
 import * as client from "../../Account/client";
 export default function PeopleDetails() {
-  const { uid} = useParams();
+  const { uid } = useParams();
   const [user, setUser] = useState<any>({});
   const navigate = useNavigate();
   const deleteUser = async (uid: string) => {
@@ -13,11 +13,6 @@ export default function PeopleDetails() {
     navigate(-1);
   };
 
-  const fetchUser = async () => {
-    if (!uid) return;
-    const user = await client.findUserById(uid);
-    setUser(user);
-  };
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
@@ -33,6 +28,11 @@ export default function PeopleDetails() {
   };
 
   useEffect(() => {
+    const fetchUser = async () => {
+      if (!uid) return;
+      const user = await client.findUserById(uid);
+      setUser(user);
+    };
     if (uid) fetchUser();
     setName(`${user.firstName} ${user.lastName}`);
     setRole(`${user.role}`)
