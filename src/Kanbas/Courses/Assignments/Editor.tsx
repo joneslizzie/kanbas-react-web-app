@@ -1,31 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useParams } from "react-router-dom";
 import AssignEditor from "./AssignEditor";
 import SubmissionEditor from "./SubmissionEditor"
 import * as db from "../../Database";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
-import * as assignmentsClient from "../client";
-import { setAssignments } from "../Assignments/reducer";
+import * as coursesClient from "../client";
+import * as assignmentClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const dispatch = useDispatch();
-  const { assignment } = useSelector((state: any) => state.assignmentReducer);
-
-  const fetchAssignment = async () => {
-    try {
-      const assignment = await assignmentsClient.findAssignmentsForCourse(cid as string);
-      if(!assignment) {
-        setAssignments('');
-      } else {
-        dispatch(setAssignments(assignment));
-      }
-    } catch (error) {
-      console.log('new assignment');
-    }
-  };
+  const assignment = db.assignments.find((assignment) => assignment._id === aid);
   
   const [title, setTitle] = useState(assignment?.title || '');
   const [description, setDescription] = useState(assignment?.description || 'New Assignment Description');
@@ -34,7 +20,7 @@ export default function AssignmentEditor() {
   const [gradeDisplay, setGradeDisplay] = useState("PERCENTAGE");
   const handleSave = async () => {
     const newAssignment = {
-      _id: title,
+      number: aid,
       course: cid,
       title,
       description,
@@ -43,16 +29,24 @@ export default function AssignmentEditor() {
       gradeDisplay
     };
 
-    dispatch(addAssignment(newAssignment));
-    window.location.href = `#/Kanbas/Courses/${cid}/Assignments`;
-  };
-  const saveAssignment = async (assignment: any) => {
-    await assignmentsClient.updateAssignment(assignment);
-    dispatch(updateAssignment(assignment));
-    // 
-    window.location.href = `#/Kanbas/Courses/${cid}/Assignments`;
-  };
+    if (aid === "A000") {
+      if (!cid) return;
+      const assignment = await coursesClient.createAssignmentForCourse(
+        cid,
+        newAssignment
+      );
+      dispatch(addAssignment(assignment));
+    } else {
+      const updatedAssignment = {
+        ...assignment,
+        ...newAssignment,
+      };
+      await coursesClient.updateAssignment(updatedAssignment);
+      dispatch(updateAssignment(updatedAssignment));
+    }
 
+    window.location.href = `#/Kanbas/Courses/${cid}/Assignments`;
+  };
 
     return (
       <div id="wd-assignments-editor">
@@ -134,7 +128,7 @@ export default function AssignmentEditor() {
                 <button id="wd-cancel" className="btn btn-secondary w-30 me-1" 
                 onClick={() => {window.location.href = `#/Kanbas/Courses/${cid}/Assignments`}}>Cancel</button> 
                 <button id="wd-save" className="btn btn-danger w-30"
-                onClick={saveAssignment}>Save</button>
+                onClick={handleSave}>Save</button>
               </div>
     </div>
 );}

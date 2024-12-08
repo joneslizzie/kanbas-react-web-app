@@ -23,6 +23,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
       }
     };
     fetchPeople();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

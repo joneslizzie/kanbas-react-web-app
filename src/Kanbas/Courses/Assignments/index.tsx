@@ -35,6 +35,7 @@ export default function Assignments() {
     dispatch(addAssignment(assignment));
   };
 
+  
 
     return (
       <div id="wd-assignments">
@@ -62,7 +63,7 @@ export default function Assignments() {
                         </div>
                         <div className="p-2">
                         <a className="wd-assignment-link"
-                          href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
+                          href={`#/Kanbas/Courses/${cid}/Assignments/${assignment.number}`}>
                           <h4 key={assignment._id} className="wd-text-strong">
                             {assignment.title}
                           </h4>
