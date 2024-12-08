@@ -13,7 +13,7 @@ export default function AssignmentEditor() {
   const dispatch = useDispatch();
   const assignment = db.assignments.find((assignment) => assignment._id === aid);
   
-  const [title, setTitle] = useState(assignment?.title || '');
+  const [title, setTitle] = useState(assignment?.title || 'new');
   const [description, setDescription] = useState(assignment?.description || 'New Assignment Description');
   const [points, setPoints] = useState(assignment?.points || 0);
   const [group, setGroup] = useState("ASSIGNMENTS");
